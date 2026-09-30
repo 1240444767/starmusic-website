@@ -3,6 +3,8 @@ import { I18nService } from '../core/i18n';
 import { ReleasesService } from '../core/releases';
 import {
   APP,
+  CLOUD_MIRRORS,
+  CLOUD_NOTE,
   DOWNLOAD_SOURCES,
   DownloadSource,
   INSTALL_STEPS,
@@ -78,6 +80,21 @@ import { RevealDirective } from '../shared/reveal';
                 </div>
               </div>
               <p class="src-note">{{ i18n.t(mirrorNote) }}</p>
+            }
+
+            @if (clouds.length) {
+              <div class="sources">
+                <span class="src-label">{{ i18n.t({ zh: '网盘备用', en: 'Cloud drives' }) }}</span>
+                <div class="pills">
+                  @for (c of clouds; track c.id) {
+                    <a class="pill cloud" [href]="c.url" target="_blank" rel="noopener">
+                      <app-icon name="cloud-download" [size]="15" />
+                      {{ i18n.t(c.label) }}
+                    </a>
+                  }
+                </div>
+              </div>
+              <p class="src-note">{{ i18n.t(cloudNote) }}</p>
             }
 
             <a class="btn" [href]="downloadHref()" target="_blank" rel="noopener">
@@ -268,6 +285,21 @@ import { RevealDirective } from '../shared/reveal';
       color: var(--st-on-primary);
     }
 
+    .pill.cloud {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      border-color: var(--st-primary);
+      color: var(--st-primary);
+      background: color-mix(in srgb, var(--st-primary) 10%, transparent);
+    }
+
+    .pill.cloud:hover {
+      background: var(--st-primary);
+      color: var(--st-on-primary);
+    }
+
     .src-note {
       margin: -8px 0 0;
       font-size: 12.5px;
@@ -387,6 +419,8 @@ export class Download {
   /** 多源镜像：线路清单 + 访客当前选择（记在 localStorage 里，下次打开还是这条） */
   protected readonly sources = DOWNLOAD_SOURCES;
   protected readonly mirrorNote = MIRROR_NOTE;
+  protected readonly clouds = CLOUD_MIRRORS;
+  protected readonly cloudNote = CLOUD_NOTE;
   private readonly sourceId = signal<string>(readStoredSource());
   protected readonly source = computed(
     () => this.sources.find((s) => s.id === this.sourceId()) ?? this.sources[0],

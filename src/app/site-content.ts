@@ -70,6 +70,33 @@ export const MIRROR_NOTE: Localized = {
   en: 'Mirrors are community-run GitHub proxies: they only forward the link and store nothing. If a route fails, pick another or switch back to GitHub.',
 };
 
+/**
+ * 网盘备用下载。
+ *
+ * 和上面的「下载线路」不是一回事：线路是把 GitHub 直链套个加速前缀，这里是一个独立页面
+ * （蓝奏云文件夹），点进去自己挑版本、免登录。
+ */
+export interface CloudMirror {
+  id: string;
+  label: Localized;
+  /** 网盘页面地址 */
+  url: string;
+}
+
+export const CLOUD_MIRRORS: CloudMirror[] = [
+  {
+    id: 'lanzou',
+    label: { zh: '蓝奏云网盘', en: 'Lanzou Drive' },
+    url: 'https://wwbsh.lanzout.com/b00zyrcnud',
+  },
+];
+
+/** 网盘备用的说明文案 */
+export const CLOUD_NOTE: Localized = {
+  zh: '蓝奏云里按版本分文件夹存放，免登录、不限速，国内直连更稳；GitHub 打不开时就走这里。',
+  en: 'The Lanzou drive keeps every past version, requires no account and is fast from mainland China — use it when GitHub is unreachable.',
+};
+
 export interface NavItem {
   /** 锚点 id，同时也是滚动定位目标 */
   id: string;
