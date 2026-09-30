@@ -1,0 +1,347 @@
+// =============================================================================
+// 星音乐 / StarMusic —— 官网全局样式
+// 主题基座用 Angular Material 3 的 mat.theme()，品牌色（App 默认种子色
+// #2F6FED）通过覆盖 --mat-sys-* 系统变量注入，深浅色都走自己的一套 token。
+// =============================================================================
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+// -----------------------------------------------------------------------------
+// 品牌 token（浅色）
+// -----------------------------------------------------------------------------
+:root {
+  color-scheme: light;
+
+  // 品牌主色族：来自 App 的 ThemeSeed.DEFAULT = 0xFF2F6FED
+  --st-primary: #2f6fed;
+  --st-primary-hover: #2159c9;
+  --st-primary-container: #dbe4ff;
+  --st-on-primary-container: #001a4d;
+  --st-secondary: #4c5a73;
+  --st-secondary-container: #dae2f9;
+  --st-on-secondary-container: #0e1b2d;
+  --st-tertiary: #6e4ea8;
+  --st-tertiary-container: #eadcff;
+  --st-on-tertiary-container: #25124a;
+
+  --st-surface: #faf9ff;
+  --st-surface-low: #f3f2fa;
+  --st-surface-mid: #edeaf6;
+  --st-surface-high: #e6e4f1;
+  --st-card: #ffffff;
+  --st-on-surface: #191b21;
+  --st-on-surface-variant: #45464f;
+  --st-outline: #c6c6d0;
+
+  --st-header-bg: rgba(250, 249, 255, 0.82);
+  --st-glow-1: rgba(47, 111, 237, 0.18);
+  --st-glow-2: rgba(110, 78, 168, 0.16);
+  --st-grid: rgba(47, 111, 237, 0.07);
+
+  --st-shadow-sm: 0 1px 2px rgba(16, 24, 64, 0.06), 0 2px 8px rgba(16, 24, 64, 0.05);
+  --st-shadow-md: 0 2px 4px rgba(16, 24, 64, 0.06), 0 12px 32px rgba(16, 24, 64, 0.09);
+  --st-shadow-lg: 0 8px 16px rgba(16, 24, 64, 0.08), 0 32px 64px rgba(16, 24, 64, 0.14);
+
+  --st-radius-xs: 12px;
+  --st-radius-sm: 16px;
+  --st-radius-md: 24px;
+  --st-radius-lg: 28px;
+  --st-radius-xl: 36px;
+
+  --st-container: 1200px;
+
+  // 把品牌色注入 Angular Material 的系统变量，让 mat-button / mat-menu /
+  // mat-tooltip 等组件也用同一套颜色。
+  --mat-sys-primary: var(--st-primary);
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: var(--st-primary-container);
+  --mat-sys-on-primary-container: var(--st-on-primary-container);
+  --mat-sys-secondary: var(--st-secondary);
+  --mat-sys-secondary-container: var(--st-secondary-container);
+  --mat-sys-on-secondary-container: var(--st-on-secondary-container);
+  --mat-sys-tertiary: var(--st-tertiary);
+  --mat-sys-tertiary-container: var(--st-tertiary-container);
+  --mat-sys-on-tertiary-container: var(--st-on-tertiary-container);
+  --mat-sys-surface: var(--st-surface);
+  --mat-sys-surface-container-low: var(--st-surface-low);
+  --mat-sys-surface-container: var(--st-surface-mid);
+  --mat-sys-surface-container-high: var(--st-surface-high);
+  --mat-sys-on-surface: var(--st-on-surface);
+  --mat-sys-on-surface-variant: var(--st-on-surface-variant);
+  --mat-sys-outline: var(--st-outline);
+  --mat-sys-outline-variant: var(--st-outline);
+}
+
+// -----------------------------------------------------------------------------
+// 品牌 token（深色）—— html.dark 由 ThemeService 切换
+// -----------------------------------------------------------------------------
+html.dark {
+  color-scheme: dark;
+
+  --st-primary: #b3c5ff;
+  --st-primary-hover: #cdd8ff;
+  --st-primary-container: #1b3f9e;
+  --st-on-primary-container: #dbe4ff;
+  --st-secondary: #bcc7e0;
+  --st-secondary-container: #34415a;
+  --st-on-secondary-container: #dae2f9;
+  --st-tertiary: #d7bbe4;
+  --st-tertiary-container: #553d70;
+  --st-on-tertiary-container: #eadcff;
+
+  --st-surface: #0e1015;
+  --st-surface-low: #15181f;
+  --st-surface-mid: #1a1d25;
+  --st-surface-high: #232733;
+  --st-card: #171a22;
+  --st-on-surface: #e3e2e9;
+  --st-on-surface-variant: #c5c6d0;
+  --st-outline: #43464f;
+
+  --st-header-bg: rgba(14, 16, 21, 0.78);
+  --st-glow-1: rgba(107, 148, 255, 0.22);
+  --st-glow-2: rgba(180, 140, 255, 0.18);
+  --st-grid: rgba(179, 197, 255, 0.08);
+
+  --st-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --st-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --st-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45), 0 32px 64px rgba(0, 0, 0, 0.55);
+
+  --mat-sys-primary: var(--st-primary);
+  --mat-sys-on-primary: #00246b;
+}
+
+// -----------------------------------------------------------------------------
+// 基础
+// -----------------------------------------------------------------------------
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  // 顶栏高度补偿，锚点跳转不要被顶栏压住
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--st-surface);
+  color: var(--st-on-surface);
+  font-family:
+    'Roboto',
+    'Noto Sans SC',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    'PingFang SC',
+    'Microsoft YaHei',
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--st-on-surface);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--st-primary);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--st-outline);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+// -----------------------------------------------------------------------------
+// 布局工具类
+// -----------------------------------------------------------------------------
+.st-container {
+  width: 100%;
+  max-width: var(--st-container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.st-section {
+  position: relative;
+  padding: 96px 0;
+}
+
+.st-section--tight {
+  padding: 72px 0;
+}
+
+.st-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--st-primary);
+  margin-bottom: 14px;
+}
+
+.st-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+}
+
+.st-subtitle {
+  margin-top: 14px;
+  font-size: 17px;
+  color: var(--st-on-surface-variant);
+  max-width: 640px;
+}
+
+.st-center-head {
+  text-align: center;
+
+  .st-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// 卡片：M3E 的大圆角 + 色调表面
+.st-card {
+  background: var(--st-card);
+  border-radius: var(--st-radius-lg);
+  padding: 28px;
+  box-shadow: var(--st-shadow-sm);
+  border: 1px solid color-mix(in srgb, var(--st-outline) 40%, transparent);
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.st-gradient-text {
+  background: linear-gradient(100deg, var(--st-primary), var(--st-tertiary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// -----------------------------------------------------------------------------
+// 滚动入场动画（[appReveal]）
+//
+// 纯 CSS 实现，不依赖 JS：支持滚动驱动动画的浏览器（Chromium 115+ / Edge / Chrome）
+// 用 `animation-timeline: view()` 让元素滚入视口时淡入上移；不支持的浏览器
+// （Firefox / Safari）退化成一次性的载入动画——两种情况下内容都不会永久隐藏。
+// 元素自身的错峰延迟由 RevealDirective 写进 `--reveal-delay`。
+// -----------------------------------------------------------------------------
+.reveal {
+  animation: st-reveal-in 0.7s cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation-delay: 0ms;
+    animation-timeline: view();
+    animation-range: entry 4% cover 34%;
+  }
+}
+
+@keyframes st-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes st-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes st-pulse {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    animation: none;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Angular Material 组件微调
+// -----------------------------------------------------------------------------
+.mat-mdc-menu-panel {
+  border-radius: var(--st-radius-md) !important;
+}
+
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  border-radius: 10px !important;
+  font-size: 12px !important;
+}

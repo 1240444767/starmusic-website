@@ -1,0 +1,38 @@
+{
+  "_readme": "官网的版本列表。每发一个新版本，把这一条复制一份放到数组最前面，改 version / tag / date / asset / size / notes 即可，页面不用重新写代码。asset 填你在 Release 里上传的 APK 文件名；留空则下载按钮退回该版本的 Release 页面。tag 要与 Release 的 tag 完全一致。",
+  "releases": [
+    {
+      "version": "1.9.0",
+      "tag": "v1.9.0",
+      "date": "2026-10-01",
+      "asset": "starmusic1.9.0.apk",
+      "size": "15.7 MB",
+      "notes": [
+        {
+          "zh": "首页新增「每日推荐」「新歌速递」与标签歌单入口",
+          "en": "New daily picks, new-release row and tag-playlist entry on the home page"
+        },
+        {
+          "zh": "搜索页新增「猜你想搜」，四平台聚合取词并去重",
+          "en": "Type-ahead search suggestions aggregated and de-duplicated across four providers"
+        },
+        {
+          "zh": "搜索页与关于页按 Material 3 Expressive 重新实现",
+          "en": "Search and About screens rebuilt with Material 3 Expressive"
+        },
+        {
+          "zh": "主题种子色支持 12 套预设配色，切换即时生效",
+          "en": "Twelve seed colours with instant app-wide re-theming"
+        },
+        {
+          "zh": "下载目录自动跟随应用名称生成，不再写死路径",
+          "en": "Download folder now derives from the app name instead of a hard-coded path"
+        },
+        {
+          "zh": "启动页、首页与播放器细节优化，切换更顺滑",
+          "en": "Splash, home and player polish for smoother transitions"
+        }
+      ]
+    }
+  ]
+}

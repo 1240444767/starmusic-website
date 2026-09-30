@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>星音乐 StarMusic · Material 3 多平台音乐播放器</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="星音乐（StarMusic）是一款 Android 平台的 Material 3 Expressive 音乐播放器，聚合酷我、酷狗、QQ 音乐与网易云音乐的搜索、歌单与榜单，支持 12 套主题种子色、每日推荐、猜你想搜与离线下载。"
+    />
+    <meta name="theme-color" content="#2f6fed" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1015" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="星音乐 StarMusic · Material 3 多平台音乐播放器" />
+    <meta
+      property="og:description"
+      content="聚合四大音乐平台，Material 3 Expressive 设计，12 套主题种子色。"
+    />
+    <meta property="og:image" content="icon/app-icon.webp" />
+
+    <link rel="icon" type="image/webp" href="icon/app-icon.webp" />
+    <link rel="apple-touch-icon" href="icon/app-icon.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 首屏前先把主题与语言落到 <html> 上，避免刷新时闪一下 -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('st-theme') || 'system';
+          var dark =
+            theme === 'dark' ||
+            (theme === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+          var lang = localStorage.getItem('st-lang');
+          if (lang === 'en') {
+            document.documentElement.lang = 'en';
+          }
+        } catch (e) {
+          /* localStorage 不可用时忽略 */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

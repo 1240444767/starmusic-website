@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-height: 100%;
+  background: var(--st-surface);
+}
+
+main {
+  display: block;
+  overflow-x: clip;
+}
+
+// 锚点直达时留出顶栏的空间
+section[id] {
+  scroll-margin-top: 84px;
+}
