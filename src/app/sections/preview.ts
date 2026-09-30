@@ -17,8 +17,8 @@ import { PhoneShot } from './phone-shot';
           <p class="st-subtitle">
             {{
               i18n.t({
-                zh: '下面是四个主要界面的位置。把对应的截图放进 public/screenshots/ 目录，页面会自动显示，不需要改代码。',
-                en: 'Four main screens are framed below. Drop the matching images into public/screenshots/ and they appear automatically — no code changes needed.'
+                zh: '四个主要界面的实机截图：首页、播放器、搜索、歌单。',
+                en: 'Real screenshots of the four main screens: home, player, search and playlists.'
               })
             }}
           </p>

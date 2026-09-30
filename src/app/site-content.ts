@@ -250,22 +250,22 @@ export interface Shot {
 
 export const SHOTS: Shot[] = [
   {
-    file: 'home.png',
+    file: 'home',
     label: { zh: '首页', en: 'Home' },
     desc: { zh: '随心榜单 · 每日推荐 · 新歌速递', en: 'Charts, daily picks, new songs' },
   },
   {
-    file: 'player.png',
+    file: 'player',
     label: { zh: '播放器', en: 'Player' },
     desc: { zh: '封面取色与滚动歌词', en: 'Cover colours and lyrics' },
   },
   {
-    file: 'search.png',
+    file: 'search',
     label: { zh: '搜索', en: 'Search' },
     desc: { zh: '四平台聚合与猜你想搜', en: 'Four-platform search' },
   },
   {
-    file: 'playlist.png',
+    file: 'playlist',
     label: { zh: '歌单', en: 'Playlists' },
     desc: { zh: '标签歌单与歌单详情', en: 'Tag playlists and details' },
   },

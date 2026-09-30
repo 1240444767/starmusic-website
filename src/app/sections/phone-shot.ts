@@ -21,13 +21,13 @@ import { Icon } from '../shared/icon';
               [alt]="label()"
               loading="lazy"
               decoding="async"
-              (error)="missing.set(true)"
+              (error)="onError()"
             />
           } @else {
             <div class="placeholder">
               <app-icon name="image" [size]="30" />
               <p class="hint">{{ label() }}</p>
-              <code>screenshots/{{ file() }}</code>
+              <code>screenshots/{{ file() }}.jpg</code>
             </div>
           }
         </div>
@@ -119,11 +119,21 @@ import { Icon } from '../shared/icon';
   `,
 })
 export class PhoneShot {
-  /** public/screenshots 下的文件名，例如 home.png */
+  /** public/screenshots 下的文件名（不带扩展名），例如 home */
   readonly file = input.required<string>();
   readonly label = input('');
   readonly caption = input('');
 
+  /** 先找 .jpg（体积小得多），找不到退回 .png，都没有才显示占位提示 */
+  protected readonly ext = signal<'jpg' | 'png'>('jpg');
   protected readonly missing = signal(false);
-  protected readonly src = computed(() => `screenshots/${this.file()}`);
+  protected readonly src = computed(() => `screenshots/${this.file()}.${this.ext()}`);
+
+  protected onError(): void {
+    if (this.ext() === 'jpg') {
+      this.ext.set('png');
+      return;
+    }
+    this.missing.set(true);
+  }
 }

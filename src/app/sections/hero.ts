@@ -70,7 +70,7 @@ import { PhoneShot } from './phone-shot';
 
         <div class="hero__visual">
           <div class="glow"></div>
-          <app-phone-shot file="home.png" [label]="i18n.t({ zh: '首页预览', en: 'Home preview' })" />
+          <app-phone-shot file="home" [label]="i18n.t({ zh: '首页预览', en: 'Home preview' })" />
 
           <ul class="chips">
             @for (p of platforms; track p.name.zh; let i = $index) {
