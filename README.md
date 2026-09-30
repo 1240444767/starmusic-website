@@ -88,15 +88,16 @@ git push -u origin main
 `https://<你的账号>.github.io/<站点仓库名>/`。
 
 > 仓库必须是 **Public**（免费账号的 Pages 仅支持公开仓库；私有仓库要 Pro/Team）。
-> 站点是独立仓库、放在根路径，`baseHref` 保持默认的 `/` 即可。
-> 如果以后改用「主仓库项目页」（`…github.io/<仓库名>/`），把构建命令改成
-> `npm run build -- --base-href=/<仓库名>/` 即可。
+> 站点用的是**相对基址**（`angular.json` 生产配置里的 `"baseHref": "./"`，构建出的
+> `index.html` 是 `<base href="./">` + 相对资源路径），所以仓库名/子路径/自定义域名怎么变都不用改配置。
+
 >
 > 想让官网源码也私有：改用 Cloudflare Pages / Vercel 从私有仓库构建，APK Releases 仍需另找公开位置。
 
 ## 技术要点
 
 - Angular 22 独立组件 + signals + **zoneless**（无 zone.js）。
+- **不使用路由**：整站是单页锚点导航，`app.config.ts` 里没有 `provideRouter`，生产包因此小约 70 KB。
 - Angular Material 3：`mat.theme()` 生成系统变量，再用 App 的默认种子色 `#2F6FED` 覆盖 `--mat-sys-*`。
 - 顶栏用 `mat-toolbar` + `mat-icon-button` + `mat-menu`（窄屏汉堡菜单）+ `mat-tooltip`。
 - 图标全部内联 SVG，不引用 Material Symbols 字体，离线/墙内也不会出现方框。
