@@ -50,10 +50,10 @@ export interface DownloadSource {
 
 export const DOWNLOAD_SOURCES: DownloadSource[] = [
   { id: 'github', label: { zh: 'GitHub 直连', en: 'GitHub' }, prefix: '' },
-  { id: 'gh-proxy', label: { zh: 'gh-proxy 镜像', en: 'gh-proxy' }, prefix: 'https://gh-proxy.com/' },
-  { id: 'llkk', label: { zh: 'llkk 镜像', en: 'llkk' }, prefix: 'https://gh.llkk.cc/' },
-  { id: 'ghfast', label: { zh: 'ghfast 镜像', en: 'ghfast' }, prefix: 'https://ghfast.top/' },
-  { id: 'ghproxy', label: { zh: 'ghproxy 镜像', en: 'ghproxy' }, prefix: 'https://ghproxy.net/' },
+  { id: 'gh-proxy', label: { zh: 'gh-proxy', en: 'gh-proxy' }, prefix: 'https://gh-proxy.com/' },
+  { id: 'llkk', label: { zh: 'llkk', en: 'llkk' }, prefix: 'https://gh.llkk.cc/' },
+  { id: 'ghfast', label: { zh: 'ghfast', en: 'ghfast' }, prefix: 'https://ghfast.top/' },
+  { id: 'ghproxy', label: { zh: 'ghproxy', en: 'ghproxy' }, prefix: 'https://ghproxy.net/' },
 ];
 
 /** 记住访客选的线路 */
