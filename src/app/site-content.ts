@@ -228,10 +228,12 @@ export const CHANGELOG: ChangelogEntry[] = [
 export interface Requirement {
   label: Localized;
   value: Localized;
+  /** 该行由 releases.json 的最新版本填值（version / size），没有时用 value 兜底 */
+  from?: 'version' | 'size';
 }
 
 export const REQUIREMENTS: Requirement[] = [
-  { label: { zh: '版本', en: 'Version' }, value: { zh: APP.version, en: APP.version } },
+  { label: { zh: '版本', en: 'Version' }, value: { zh: APP.version, en: APP.version }, from: 'version' },
   {
     label: { zh: '系统要求', en: 'Requires' },
     value: { zh: 'Android 7.0 (API 24) 及以上', en: 'Android 7.0 (API 24) or newer' },
@@ -243,6 +245,7 @@ export const REQUIREMENTS: Requirement[] = [
   {
     label: { zh: '体积', en: 'Size' },
     value: { zh: '以 GitHub Release 为准', en: 'As listed on GitHub Releases' },
+    from: 'size',
   },
 ];
 

@@ -43,7 +43,7 @@ import { RevealDirective } from '../shared/reveal';
             </div>
 
             <dl class="req">
-              @for (item of requirements; track item.label.zh) {
+              @for (item of requirements(); track item.label.zh) {
                 <div>
                   <dt>{{ i18n.t(item.label) }}</dt>
                   <dd>{{ i18n.t(item.value) }}</dd>
@@ -265,11 +265,20 @@ import { RevealDirective } from '../shared/reveal';
 export class Download {
   protected readonly i18n = inject(I18nService);
   protected readonly app = APP;
-  protected readonly requirements = REQUIREMENTS;
   protected readonly steps = INSTALL_STEPS;
 
   /** 最新版本；releases.json 里写了 asset 就直链到 APK，否则退回该版本的 Release 页面 */
   protected readonly latest = inject(ReleasesService).latest;
   protected readonly hasAsset = computed(() => !!this.latest().asset);
   protected readonly downloadHref = computed(() => releaseDownloadUrl(this.latest()));
+
+  /** 版本/体积两行由 releases.json 的最新版本填值，缺值就退回静态文案 */
+  protected readonly requirements = computed(() => {
+    const r = this.latest();
+    return REQUIREMENTS.map((item) => {
+      if (item.from === 'version') return { ...item, value: { zh: r.version, en: r.version } };
+      if (item.from === 'size' && r.size) return { ...item, value: { zh: r.size, en: r.size } };
+      return item;
+    });
+  });
 }
