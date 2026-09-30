@@ -41,7 +41,7 @@ import { PhoneShot } from './phone-shot';
           </p>
 
           <div class="cta">
-            <a class="btn btn--filled" [href]="app.latestReleaseUrl" target="_blank" rel="noopener">
+            <a class="btn btn--filled" href="#download">
               <app-icon name="download" [size]="19" />
               {{ i18n.t({ zh: '下载 APK', en: 'Download APK' }) }}
             </a>
@@ -189,7 +189,7 @@ import { PhoneShot } from './phone-shot';
 
     .btn--filled {
       background: var(--st-primary);
-      color: #fff;
+      color: var(--st-on-primary);
       box-shadow: var(--st-shadow-md);
     }
 

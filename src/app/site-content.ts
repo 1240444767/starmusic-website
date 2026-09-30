@@ -79,9 +79,73 @@ export interface NavItem {
 export const NAV: NavItem[] = [
   { id: 'features', label: { zh: '功能', en: 'Features' } },
   { id: 'preview', label: { zh: '界面预览', en: 'Screenshots' } },
+  { id: 'play', label: { zh: '玩一玩', en: 'Playground' } },
   { id: 'platforms', label: { zh: '音乐平台', en: 'Platforms' } },
   { id: 'changelog', label: { zh: '更新日志', en: 'Changelog' } },
   { id: 'download', label: { zh: '下载', en: 'Download' } },
+];
+
+// -----------------------------------------------------------------------------
+// 「玩一玩」区块：主题种子色 + 猜你想搜，两段纯前端演示
+// -----------------------------------------------------------------------------
+
+export interface ThemeSeedPreset {
+  name: Localized;
+  hex: string;
+}
+
+/** App 设置页的 12 套主题种子色，取值与 `ThemeSeed.kt` 的 presets 一一对应 */
+export const THEME_SEEDS: ThemeSeedPreset[] = [
+  { name: { zh: '默认蓝', en: 'Default blue' }, hex: '#2f6fed' },
+  { name: { zh: '靛蓝', en: 'Indigo' }, hex: '#4f46e5' },
+  { name: { zh: '青蓝', en: 'Cyan blue' }, hex: '#0097a7' },
+  { name: { zh: '翠绿', en: 'Emerald' }, hex: '#2e9e5b' },
+  { name: { zh: '墨绿', en: 'Deep green' }, hex: '#2f6f5e' },
+  { name: { zh: '柠檬', en: 'Lime' }, hex: '#8fbf2e' },
+  { name: { zh: '橙', en: 'Orange' }, hex: '#f28c28' },
+  { name: { zh: '珊瑚红', en: 'Coral' }, hex: '#e5534b' },
+  { name: { zh: '玫红', en: 'Rose' }, hex: '#e0489b' },
+  { name: { zh: '紫', en: 'Violet' }, hex: '#8b5cf6' },
+  { name: { zh: '棕', en: 'Brown' }, hex: '#8d6e63' },
+  { name: { zh: '灰蓝', en: 'Slate blue' }, hex: '#5a6b8c' },
+];
+
+/** App 的默认种子色（ThemeSeed.DEFAULT） */
+export const DEFAULT_SEED = THEME_SEEDS[0].hex;
+
+/** 访客选过的种子色存这里 */
+export const SEED_STORAGE_KEY = 'st-seed';
+
+/** 「猜你想搜」演示用的联想词池（真实 App 是四个平台接口并发返回） */
+export const SEARCH_HINTS: Localized[] = [
+  { zh: '周杰伦', en: 'Jay Chou' },
+  { zh: '林俊杰', en: 'JJ Lin' },
+  { zh: '陈奕迅', en: 'Eason Chan' },
+  { zh: '邓紫棋', en: 'G.E.M.' },
+  { zh: '五月天', en: 'Mayday' },
+  { zh: '李荣浩', en: 'Li Ronghao' },
+  { zh: '毛不易', en: 'Mao Buyi' },
+  { zh: '薛之谦', en: 'Joker Xue' },
+  { zh: '张韶涵', en: 'Angela Chang' },
+  { zh: '王菲', en: 'Faye Wong' },
+  { zh: '民谣', en: 'Folk' },
+  { zh: '摇滚', en: 'Rock' },
+  { zh: '粤语', en: 'Cantopop' },
+  { zh: '古风', en: 'Guofeng' },
+  { zh: '电子', en: 'Electronic' },
+  { zh: '钢琴', en: 'Piano' },
+  { zh: '爵士', en: 'Jazz' },
+  { zh: '纯音乐', en: 'Instrumental' },
+  { zh: '轻音乐', en: 'Easy listening' },
+  { zh: '华语', en: 'Mandopop' },
+  { zh: '欧美', en: 'Western pop' },
+  { zh: '日系', en: 'J-pop' },
+  { zh: '深夜', en: 'Late night' },
+  { zh: '通勤', en: 'Commute' },
+  { zh: '学习', en: 'Study' },
+  { zh: '助眠', en: 'Sleep' },
+  { zh: '运动', en: 'Workout' },
+  { zh: '怀旧', en: 'Nostalgic' },
 ];
 
 export interface Stat {

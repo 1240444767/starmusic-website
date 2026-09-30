@@ -89,10 +89,21 @@ import { RevealDirective } from '../shared/reveal';
               }
             </a>
 
-            <a class="ghost" [href]="app.releasesUrl" target="_blank" rel="noopener">
-              <app-icon name="github" [size]="16" />
-              {{ i18n.t({ zh: '查看所有版本', en: 'All releases' }) }}
-            </a>
+            <div class="links">
+              <a class="ghost" [href]="app.releasesUrl" target="_blank" rel="noopener">
+                <app-icon name="github" [size]="16" />
+                {{ i18n.t({ zh: '查看所有版本', en: 'All releases' }) }}
+              </a>
+
+              <button class="ghost" type="button" [disabled]="!hasAsset()" (click)="copyLink()">
+                <app-icon [name]="copied() ? 'check' : 'link'" [size]="16" />
+                {{
+                  copied()
+                    ? i18n.t({ zh: '已复制', en: 'Copied' })
+                    : i18n.t({ zh: '复制直链', en: 'Copy link' })
+                }}
+              </button>
+            </div>
           </div>
 
           <ol class="steps" appReveal [revealDelay]="120">
@@ -196,7 +207,7 @@ import { RevealDirective } from '../shared/reveal';
       padding: 15px 24px;
       border-radius: 999px;
       background: var(--st-primary);
-      color: #fff;
+      color: var(--st-on-primary);
       font-size: 15px;
       font-weight: 600;
       box-shadow: var(--st-shadow-md);
@@ -254,7 +265,7 @@ import { RevealDirective } from '../shared/reveal';
     .pill.on {
       background: var(--st-primary);
       border-color: var(--st-primary);
-      color: #fff;
+      color: var(--st-on-primary);
     }
 
     .src-note {
@@ -269,13 +280,32 @@ import { RevealDirective } from '../shared/reveal';
       align-items: center;
       justify-content: center;
       gap: 8px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      font-family: inherit;
       font-size: 13.5px;
       font-weight: 600;
       color: var(--st-primary);
+      cursor: pointer;
     }
 
     .ghost:hover {
       text-decoration: underline;
+    }
+
+    .ghost:disabled {
+      opacity: 0.5;
+      cursor: default;
+      text-decoration: none;
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      flex-wrap: wrap;
     }
 
     .steps {
@@ -304,7 +334,7 @@ import { RevealDirective } from '../shared/reveal';
       height: 34px;
       border-radius: 12px;
       background: var(--st-primary);
-      color: #fff;
+      color: var(--st-on-primary);
       font-size: 15px;
       font-weight: 700;
     }
@@ -375,6 +405,34 @@ export class Download {
     } catch {
       /* 隐私模式下写不了，忽略 */
     }
+  }
+
+  /** 「已复制」提示的短暂时态 */
+  protected readonly copied = signal(false);
+
+  /** 复制当前线路的直链（发群、发帖时可以直接贴） */
+  protected async copyLink(): Promise<void> {
+    const url = this.downloadHref();
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      // 非安全上下文或旧浏览器没有 clipboard API，退回 execCommand
+      const scratch = document.createElement('textarea');
+      scratch.value = url;
+      scratch.setAttribute('readonly', '');
+      scratch.style.position = 'fixed';
+      scratch.style.opacity = '0';
+      document.body.appendChild(scratch);
+      scratch.select();
+      try {
+        document.execCommand('copy');
+      } catch {
+        /* 复制不了就算了，别打断浏览 */
+      }
+      scratch.remove();
+    }
+    this.copied.set(true);
+    window.setTimeout(() => this.copied.set(false), 1600);
   }
 
   /** 版本/体积两行由 releases.json 的最新版本填值，缺值就退回静态文案 */

@@ -25,17 +25,22 @@ html {
 :root {
   color-scheme: light;
 
-  // 品牌主色族：来自 App 的 ThemeSeed.DEFAULT = 0xFF2F6FED
-  --st-primary: #2f6fed;
-  --st-primary-hover: #2159c9;
-  --st-primary-container: #dbe4ff;
-  --st-on-primary-container: #001a4d;
+  // 种子色：默认是 App 的 ThemeSeed.DEFAULT = 0xFF2F6FED。「玩一玩」区块里点一个色块，
+  // SeedService 会改写这个变量，下面所有品牌色（主色、容器色、发光、网格线）都由它派生。
+  --st-seed: #2f6fed;
+
+  --st-primary: var(--st-seed);
+  // 主色上的文字色由 SeedService 按对比度算好（种子色深浅差别很大）
+  --st-on-primary: var(--st-on-primary-light, #ffffff);
+  --st-primary-hover: color-mix(in srgb, var(--st-seed) 84%, #000);
+  --st-primary-container: color-mix(in srgb, var(--st-seed) 16%, #fff);
+  --st-on-primary-container: color-mix(in srgb, var(--st-seed) 58%, #000);
   --st-secondary: #4c5a73;
-  --st-secondary-container: #dae2f9;
-  --st-on-secondary-container: #0e1b2d;
-  --st-tertiary: #6e4ea8;
-  --st-tertiary-container: #eadcff;
-  --st-on-tertiary-container: #25124a;
+  --st-secondary-container: color-mix(in srgb, var(--st-seed) 13%, #f2f2f8);
+  --st-on-secondary-container: color-mix(in srgb, var(--st-seed) 58%, #000);
+  --st-tertiary: color-mix(in srgb, var(--st-seed) 62%, #7a52b3);
+  --st-tertiary-container: color-mix(in srgb, var(--st-seed) 18%, #fff);
+  --st-on-tertiary-container: color-mix(in srgb, var(--st-seed) 55%, #000);
 
   --st-surface: #faf9ff;
   --st-surface-low: #f3f2fa;
@@ -47,9 +52,9 @@ html {
   --st-outline: #c6c6d0;
 
   --st-header-bg: rgba(250, 249, 255, 0.82);
-  --st-glow-1: rgba(47, 111, 237, 0.18);
-  --st-glow-2: rgba(110, 78, 168, 0.16);
-  --st-grid: rgba(47, 111, 237, 0.07);
+  --st-glow-1: color-mix(in srgb, var(--st-seed) 20%, transparent);
+  --st-glow-2: color-mix(in srgb, var(--st-seed) 12%, transparent);
+  --st-grid: color-mix(in srgb, var(--st-seed) 8%, transparent);
 
   --st-shadow-sm: 0 1px 2px rgba(16, 24, 64, 0.06), 0 2px 8px rgba(16, 24, 64, 0.05);
   --st-shadow-md: 0 2px 4px rgba(16, 24, 64, 0.06), 0 12px 32px rgba(16, 24, 64, 0.09);
@@ -66,7 +71,7 @@ html {
   // 把品牌色注入 Angular Material 的系统变量，让 mat-button / mat-menu /
   // mat-tooltip 等组件也用同一套颜色。
   --mat-sys-primary: var(--st-primary);
-  --mat-sys-on-primary: #ffffff;
+  --mat-sys-on-primary: var(--st-on-primary);
   --mat-sys-primary-container: var(--st-primary-container);
   --mat-sys-on-primary-container: var(--st-on-primary-container);
   --mat-sys-secondary: var(--st-secondary);
@@ -91,16 +96,18 @@ html {
 html.dark {
   color-scheme: dark;
 
-  --st-primary: #b3c5ff;
-  --st-primary-hover: #cdd8ff;
-  --st-primary-container: #1b3f9e;
-  --st-on-primary-container: #dbe4ff;
+  // 深色下的品牌色从同一个种子色提亮派生，保证在深底上够亮；按钮上的文字反过来用深色
+  --st-primary: color-mix(in srgb, var(--st-seed) 72%, #fff);
+  --st-on-primary: var(--st-on-primary-dark, #101318);
+  --st-primary-hover: color-mix(in srgb, var(--st-seed) 50%, #fff);
+  --st-primary-container: color-mix(in srgb, var(--st-seed) 44%, #10131c);
+  --st-on-primary-container: color-mix(in srgb, var(--st-seed) 20%, #fff);
   --st-secondary: #bcc7e0;
-  --st-secondary-container: #34415a;
-  --st-on-secondary-container: #dae2f9;
-  --st-tertiary: #d7bbe4;
-  --st-tertiary-container: #553d70;
-  --st-on-tertiary-container: #eadcff;
+  --st-secondary-container: color-mix(in srgb, var(--st-seed) 22%, #1c1f27);
+  --st-on-secondary-container: color-mix(in srgb, var(--st-seed) 14%, #e6e6ee);
+  --st-tertiary: color-mix(in srgb, var(--st-seed) 42%, #d7bbe4);
+  --st-tertiary-container: color-mix(in srgb, var(--st-seed) 38%, #241a33);
+  --st-on-tertiary-container: color-mix(in srgb, var(--st-seed) 16%, #fff);
 
   --st-surface: #0e1015;
   --st-surface-low: #15181f;
@@ -112,16 +119,16 @@ html.dark {
   --st-outline: #43464f;
 
   --st-header-bg: rgba(14, 16, 21, 0.78);
-  --st-glow-1: rgba(107, 148, 255, 0.22);
-  --st-glow-2: rgba(180, 140, 255, 0.18);
-  --st-grid: rgba(179, 197, 255, 0.08);
+  --st-glow-1: color-mix(in srgb, var(--st-seed) 34%, transparent);
+  --st-glow-2: color-mix(in srgb, var(--st-seed) 20%, transparent);
+  --st-grid: color-mix(in srgb, var(--st-seed) 14%, transparent);
 
   --st-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --st-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
   --st-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.45), 0 32px 64px rgba(0, 0, 0, 0.55);
 
   --mat-sys-primary: var(--st-primary);
-  --mat-sys-on-primary: #00246b;
+  --mat-sys-on-primary: var(--st-on-primary);
 }
 
 // -----------------------------------------------------------------------------
@@ -324,12 +331,50 @@ img {
   }
 }
 
+// -----------------------------------------------------------------------------
+// 顶栏品牌图标的音符彩蛋（元素由 SiteHeader 动态创建在 body 上，所以样式必须是全局的）
+// -----------------------------------------------------------------------------
+.st-notes {
+  position: fixed;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.st-note {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--st-primary);
+  font-weight: 700;
+  line-height: 1;
+  animation: st-note-fly 1.15s cubic-bezier(0.2, 0.7, 0.3, 1) var(--delay, 0ms) both;
+}
+
+@keyframes st-note-fly {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, -120px))) scale(1.1)
+      rotate(var(--rot, 0deg));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .reveal {
+    animation: none;
+  }
+
+  .st-note {
     animation: none;
   }
 }

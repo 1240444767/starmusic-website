@@ -15,7 +15,7 @@ import { Icon } from '../shared/icon';
   template: `
     <mat-toolbar class="bar" [class.scrolled]="scrolled()">
       <div class="st-container inner">
-        <a class="brand" href="#top">
+        <a class="brand" href="#top" (click)="noteBurst($event)">
           <img src="icon/app-icon.webp" width="34" height="34" alt="" />
           <span>{{ i18n.t(app.name) }}</span>
         </a>
@@ -84,7 +84,7 @@ import { Icon } from '../shared/icon';
       @for (item of nav; track item.id) {
         <a mat-menu-item [href]="'#' + item.id">{{ i18n.t(item.label) }}</a>
       }
-      <a mat-menu-item [href]="app.latestReleaseUrl" target="_blank" rel="noopener">
+      <a mat-menu-item href="#download">
         {{ i18n.t({ zh: '下载 APK', en: 'Download APK' }) }}
       </a>
     </mat-menu>
@@ -199,7 +199,7 @@ import { Icon } from '../shared/icon';
       padding: 0 20px;
       border-radius: 999px;
       background: var(--st-primary);
-      color: #fff;
+      color: var(--st-on-primary);
       font-size: 14px;
       font-weight: 600;
       box-shadow: var(--st-shadow-sm);
@@ -245,5 +245,31 @@ export class SiteHeader {
   @HostListener('window:scroll')
   protected onScroll(): void {
     this.scrolled.set(window.scrollY > 8);
+  }
+
+  /** 点品牌图标的彩蛋：一串音符从图标处飘出来（尊重 prefers-reduced-motion） */
+  protected noteBurst(event: MouseEvent): void {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const layer = document.createElement('div');
+    layer.className = 'st-notes';
+    layer.style.left = `${rect.left + rect.width / 2}px`;
+    layer.style.top = `${rect.top + rect.height / 2}px`;
+    document.body.appendChild(layer);
+
+    const glyphs = ['♪', '♬', '♩'];
+    for (let i = 0; i < 9; i++) {
+      const note = document.createElement('span');
+      note.className = 'st-note';
+      note.textContent = glyphs[i % glyphs.length];
+      note.style.setProperty('--dx', `${((Math.random() - 0.5) * 230).toFixed(1)}px`);
+      note.style.setProperty('--dy', `${(-70 - Math.random() * 130).toFixed(1)}px`);
+      note.style.setProperty('--rot', `${((Math.random() - 0.5) * 90).toFixed(0)}deg`);
+      note.style.setProperty('--delay', `${i * 40}ms`);
+      note.style.fontSize = `${14 + Math.random() * 12}px`;
+      layer.appendChild(note);
+    }
+
+    window.setTimeout(() => layer.remove(), 1700);
   }
 }

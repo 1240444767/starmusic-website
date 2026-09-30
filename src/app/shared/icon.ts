@@ -194,6 +194,13 @@ export const ICONS: Record<string, IconDef> = {
   refresh: {
     paths: [line('M20 12a8 8 0 1 1-2.4-5.7'), line('M20.2 3.8 V8.4 H15.6')],
   },
+  link: {
+    paths: [
+      line('M10.2 13.8 L13.8 10.2'),
+      line('M9.4 7.9l1.5-1.5a3.6 3.6 0 0 1 5.1 0l1.6 1.6a3.6 3.6 0 0 1 0 5.1l-1.5 1.5'),
+      line('M14.6 16.1l-1.5 1.5a3.6 3.6 0 0 1-5.1 0l-1.6-1.6a3.6 3.6 0 0 1 0-5.1l1.5-1.5'),
+    ],
+  },
   'arrow-up': {
     paths: [line('M12 19.4 V5.2'), line('M6.6 10.6 L12 5.2 L17.4 10.6')],
   },
