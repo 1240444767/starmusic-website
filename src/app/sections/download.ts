@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { I18nService } from '../core/i18n';
 import { ReleasesService } from '../core/releases';
-import { APP, INSTALL_STEPS, REQUIREMENTS, releaseDownloadUrl } from '../site-content';
+import {
+  APP,
+  DOWNLOAD_SOURCES,
+  DownloadSource,
+  INSTALL_STEPS,
+  MIRROR_NOTE,
+  REQUIREMENTS,
+  SOURCE_STORAGE_KEY,
+  releaseDownloadUrl,
+  sourceDownloadUrl,
+} from '../site-content';
 import { Icon } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal';
 
@@ -50,6 +60,25 @@ import { RevealDirective } from '../shared/reveal';
                 </div>
               }
             </dl>
+
+            @if (hasAsset()) {
+              <div class="sources">
+                <span class="src-label">{{ i18n.t({ zh: '下载线路', en: 'Source' }) }}</span>
+                <div class="pills">
+                  @for (s of sources; track s.id) {
+                    <button
+                      type="button"
+                      class="pill"
+                      [class.on]="s.id === source().id"
+                      (click)="pickSource(s)"
+                    >
+                      {{ i18n.t(s.label) }}
+                    </button>
+                  }
+                </div>
+              </div>
+              <p class="src-note">{{ i18n.t(mirrorNote) }}</p>
+            }
 
             <a class="btn" [href]="downloadHref()" target="_blank" rel="noopener">
               <app-icon name="download" [size]="19" />
@@ -181,6 +210,60 @@ import { RevealDirective } from '../shared/reveal';
       background: var(--st-primary-hover);
     }
 
+    .sources {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .src-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--st-on-surface-variant);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--st-outline) 60%, transparent);
+      background: transparent;
+      color: var(--st-on-surface-variant);
+      font: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      line-height: 1.5;
+      cursor: pointer;
+      transition:
+        background-color 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+    }
+
+    .pill:hover {
+      border-color: var(--st-primary);
+      color: var(--st-primary);
+    }
+
+    .pill.on {
+      background: var(--st-primary);
+      border-color: var(--st-primary);
+      color: #fff;
+    }
+
+    .src-note {
+      margin: -8px 0 0;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: var(--st-on-surface-variant);
+    }
+
     .ghost {
       display: inline-flex;
       align-items: center;
@@ -270,7 +353,29 @@ export class Download {
   /** 最新版本；releases.json 里写了 asset 就直链到 APK，否则退回该版本的 Release 页面 */
   protected readonly latest = inject(ReleasesService).latest;
   protected readonly hasAsset = computed(() => !!this.latest().asset);
-  protected readonly downloadHref = computed(() => releaseDownloadUrl(this.latest()));
+
+  /** 多源镜像：线路清单 + 访客当前选择（记在 localStorage 里，下次打开还是这条） */
+  protected readonly sources = DOWNLOAD_SOURCES;
+  protected readonly mirrorNote = MIRROR_NOTE;
+  private readonly sourceId = signal<string>(readStoredSource());
+  protected readonly source = computed(
+    () => this.sources.find((s) => s.id === this.sourceId()) ?? this.sources[0],
+  );
+
+  /** 当前线路下的下载地址；没有资产时退回 Release 页面，镜像前缀不参与 */
+  protected readonly downloadHref = computed(() => {
+    const href = releaseDownloadUrl(this.latest());
+    return sourceDownloadUrl(this.hasAsset() ? this.source() : this.sources[0], href);
+  });
+
+  protected pickSource(source: DownloadSource): void {
+    this.sourceId.set(source.id);
+    try {
+      localStorage.setItem(SOURCE_STORAGE_KEY, source.id);
+    } catch {
+      /* 隐私模式下写不了，忽略 */
+    }
+  }
 
   /** 版本/体积两行由 releases.json 的最新版本填值，缺值就退回静态文案 */
   protected readonly requirements = computed(() => {
@@ -281,4 +386,13 @@ export class Download {
       return item;
     });
   });
+}
+
+/** 读上次选的下载线路；localStorage 不可用时一律回到 GitHub 直连 */
+function readStoredSource(): string {
+  try {
+    return localStorage.getItem(SOURCE_STORAGE_KEY) ?? DOWNLOAD_SOURCES[0].id;
+  } catch {
+    return DOWNLOAD_SOURCES[0].id;
+  }
 }

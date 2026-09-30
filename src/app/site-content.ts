@@ -34,6 +34,42 @@ export function releaseDownloadUrl(entry: { tag: string; asset?: string }): stri
     : `${APP.releasesUrl}/tag/${entry.tag}`;
 }
 
+/**
+ * 下载线路（多源镜像开关）。
+ *
+ * GitHub 的 Release 资产在国内常连不上，所以除了直连，再并列几条第三方公益加速线路供访客切换：
+ * 它们只把 GitHub 链接原样转发（`前缀 + GitHub 原始链接`），不保存任何文件。
+ * 线路由第三方维护、随时可能失效，因此默认永远是 GitHub 直连，某条不通就换一条或换回直连。
+ */
+export interface DownloadSource {
+  id: string;
+  label: Localized;
+  /** 空字符串 = GitHub 直连；其它是转发前缀，直接拼在 GitHub 原始链接前面 */
+  prefix: string;
+}
+
+export const DOWNLOAD_SOURCES: DownloadSource[] = [
+  { id: 'github', label: { zh: 'GitHub 直连', en: 'GitHub' }, prefix: '' },
+  { id: 'gh-proxy', label: { zh: 'gh-proxy 镜像', en: 'gh-proxy' }, prefix: 'https://gh-proxy.com/' },
+  { id: 'llkk', label: { zh: 'llkk 镜像', en: 'llkk' }, prefix: 'https://gh.llkk.cc/' },
+  { id: 'ghfast', label: { zh: 'ghfast 镜像', en: 'ghfast' }, prefix: 'https://ghfast.top/' },
+  { id: 'ghproxy', label: { zh: 'ghproxy 镜像', en: 'ghproxy' }, prefix: 'https://ghproxy.net/' },
+];
+
+/** 记住访客选的线路 */
+export const SOURCE_STORAGE_KEY = 'st-dl-source';
+
+/** 把某条线路的前缀套到 GitHub 原始链接上 */
+export function sourceDownloadUrl(source: DownloadSource, url: string): string {
+  return source.prefix ? source.prefix + url : url;
+}
+
+/** 镜像线路的说明文案 */
+export const MIRROR_NOTE: Localized = {
+  zh: '镜像为第三方公益加速线路，只转发 GitHub 链接、不保存文件；某条线路不通时换一条或换回直连即可。',
+  en: 'Mirrors are community-run GitHub proxies: they only forward the link and store nothing. If a route fails, pick another or switch back to GitHub.',
+};
+
 export interface NavItem {
   /** 锚点 id，同时也是滚动定位目标 */
   id: string;
