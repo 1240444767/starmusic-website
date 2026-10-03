@@ -5,6 +5,7 @@ import {
   APP,
   CLOUD_MIRRORS,
   CLOUD_NOTE,
+  CloudMirror,
   DOWNLOAD_SOURCES,
   DownloadSource,
   INSTALL_STEPS,
@@ -82,11 +83,11 @@ import { RevealDirective } from '../shared/reveal';
               <p class="src-note">{{ i18n.t(mirrorNote) }}</p>
             }
 
-            @if (clouds.length) {
+            @if (clouds().length) {
               <div class="sources">
                 <span class="src-label">{{ i18n.t({ zh: '网盘备用', en: 'Cloud drives' }) }}</span>
                 <div class="pills">
-                  @for (c of clouds; track c.id) {
+                  @for (c of clouds(); track c.id) {
                     <a class="pill cloud" [href]="c.url" target="_blank" rel="noopener">
                       <app-icon name="cloud-download" [size]="15" />
                       {{ i18n.t(c.label) }}
@@ -419,7 +420,23 @@ export class Download {
   /** 多源镜像：线路清单 + 访客当前选择（记在 localStorage 里，下次打开还是这条） */
   protected readonly sources = DOWNLOAD_SOURCES;
   protected readonly mirrorNote = MIRROR_NOTE;
-  protected readonly clouds = CLOUD_MIRRORS;
+  protected readonly clouds = computed<CloudMirror[]>(() => {
+    const lanzou = this.latest().lanzou;
+    if (!lanzou) {
+      return CLOUD_MIRRORS;
+    }
+    return [
+      ...CLOUD_MIRRORS,
+      {
+        id: 'lanzou-latest',
+        label: {
+          zh: `蓝奏云 v${this.latest().version}`,
+          en: `Lanzou v${this.latest().version}`,
+        },
+        url: lanzou,
+      },
+    ];
+  });
   protected readonly cloudNote = CLOUD_NOTE;
   private readonly sourceId = signal<string>(readStoredSource());
   protected readonly source = computed(

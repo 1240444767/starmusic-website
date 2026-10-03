@@ -19,7 +19,7 @@ export const SITE_REPO_URL = `https://github.com/${GITHUB.owner}/${GITHUB.repo}`
 export const APP = {
   name: { zh: '星音乐', en: 'StarMusic' } satisfies Localized,
   /** 兜底版本号：有 releases.json 时以它为准 */
-  version: '1.9.0',
+  version: '2.0.0',
   packageId: 'com.starbox.starmusic',
   siteRepoUrl: SITE_REPO_URL,
   releasesUrl: `${SITE_REPO_URL}/releases`,
@@ -338,6 +338,19 @@ export interface ChangelogEntry {
  * 正常发版只需要改 `website/public/releases.json`，不用碰这个文件。
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: '2.0.0',
+    badge: { zh: '最新', en: 'Latest' },
+    items: [
+      { zh: '新增「主题切换」：跟随系统 / 浅色 / 深色三档，含 OLED 纯黑模式', en: 'New theme switcher — system / light / dark, plus an OLED true-black mode' },
+      { zh: '下载支持选择音质（批量多选时也能一次指定），下载文件可内嵌歌词与封面', en: 'Choose audio quality for downloads — even for batch selections — with embedded lyrics and cover art' },
+      { zh: '修复酷狗歌单导入：超过 2000 首的歌单现在能完整取回全部歌曲', en: 'Fixed Kugou playlist import so lists with 2000+ tracks are now retrieved in full' },
+      { zh: '修复歌单里同一首歌重复出现时，批量下载弹窗闪退的问题', en: 'Fixed a crash in the batch-download dialog when a playlist contains duplicate tracks' },
+      { zh: '全屏播放页歌单队列按 Material 3 Expressive 重做：封面列表、正在播放胶囊、长按拖动排序', en: 'The play-queue sheet was rebuilt with Material 3 Expressive: cover thumbnails, a now-playing pill and long-press reordering' },
+      { zh: '修复设置页打包报错（单个方法超过 64 KB 上限），并重新整理设置项分区', en: 'Fixed a packaging failure caused by an oversized (64 KB) settings method and reorganised the settings sections' },
+      { zh: '评论弹窗、下载弹窗与全屏下载权限弹窗的显示问题修复；首页、搜索页、关于页与启动页整体优化', en: 'Fixed display problems in the comment, download and full-screen download-permission dialogs; general polish across home, search, about and splash' },
+    ],
+  },
   {
     version: '1.9.0',
     badge: { zh: '最新', en: 'Latest' },

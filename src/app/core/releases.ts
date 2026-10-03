@@ -14,6 +14,8 @@ export interface ReleaseEntry {
   asset?: string;
   /** 可选：展示用的体积文案，例如 `8.4 MB` */
   size?: string;
+  /** 可选：该版本单独的蓝奏云分享链接，填了就在「网盘备用」里多出一个本版直链 */
+  lanzou?: string;
   /** 该版本的更新条目（中英各一份） */
   notes?: Localized[];
 }
