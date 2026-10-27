@@ -19,7 +19,7 @@ export const SITE_REPO_URL = `https://github.com/${GITHUB.owner}/${GITHUB.repo}`
 export const APP = {
   name: { zh: '星音乐', en: 'StarMusic' } satisfies Localized,
   /** 兜底版本号：有 releases.json 时以它为准 */
-  version: '2.0.0',
+  version: '2.1.0',
   packageId: 'com.starbox.starmusic',
   siteRepoUrl: SITE_REPO_URL,
   releasesUrl: `${SITE_REPO_URL}/releases`,
@@ -68,33 +68,6 @@ export function sourceDownloadUrl(source: DownloadSource, url: string): string {
 export const MIRROR_NOTE: Localized = {
   zh: '镜像为第三方公益加速线路，只转发 GitHub 链接、不保存文件；某条线路不通时换一条或换回直连即可。',
   en: 'Mirrors are community-run GitHub proxies: they only forward the link and store nothing. If a route fails, pick another or switch back to GitHub.',
-};
-
-/**
- * 网盘备用下载。
- *
- * 和上面的「下载线路」不是一回事：线路是把 GitHub 直链套个加速前缀，这里是一个独立页面
- * （蓝奏云文件夹），点进去自己挑版本、免登录。
- */
-export interface CloudMirror {
-  id: string;
-  label: Localized;
-  /** 网盘页面地址 */
-  url: string;
-}
-
-export const CLOUD_MIRRORS: CloudMirror[] = [
-  {
-    id: 'lanzou',
-    label: { zh: '蓝奏云网盘', en: 'Lanzou Drive' },
-    url: 'https://wwbsh.lanzout.com/b00zyrcnud',
-  },
-];
-
-/** 网盘备用的说明文案 */
-export const CLOUD_NOTE: Localized = {
-  zh: '蓝奏云里按版本分文件夹存放，免登录、不限速，国内直连更稳；GitHub 打不开时就走这里。',
-  en: 'The Lanzou drive keeps every past version, requires no account and is fast from mainland China — use it when GitHub is unreachable.',
 };
 
 export interface NavItem {
@@ -338,6 +311,16 @@ export interface ChangelogEntry {
  * 正常发版只需要改 `website/public/releases.json`，不用碰这个文件。
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: '2.1.0',
+    badge: { zh: '最新', en: 'Latest' },
+    items: [
+      { zh: '新增 - 播放缓存：边播边缓存，播放过的歌下次直接读本地（断网也能播）', en: 'New - play-through cache: songs are stored as they play and replay from local storage, even offline' },
+      { zh: '新增 - 内置音源改为云端下发（加密配置 + 三条线路回退），换接口不用发版', en: 'New - built-in sources now come from an encrypted cloud config with three fallback routes, so endpoints can change without an update' },
+      { zh: '新增 - 云端配置里的 lx 音源自动导入到自定义音源列表（按名称与版本去重）', en: 'New - LX source scripts declared in the cloud config are imported into custom sources automatically, de-duplicated by name and version' },
+      { zh: '优化 - 设置页新增「播放缓存」分组：开关、缓存上限、已占用空间与清除', en: 'Improved - new Play cache section in Settings: on/off switch, size limit, used space and clear' },
+    ],
+  },
   {
     version: '2.0.0',
     badge: { zh: '最新', en: 'Latest' },

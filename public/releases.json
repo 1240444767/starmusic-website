@@ -1,13 +1,37 @@
 {
-  "_readme": "官网的版本列表。每发一个新版本，把这一条复制一份放到数组最前面，改 version / tag / date / asset / size / notes 即可，页面不用重新写代码。asset 填你在 Release 里上传的 APK 文件名；留空则下载按钮退回该版本的 Release 页面。tag 要与 Release 的 tag 完全一致。可选 lanzou：该版本单独的蓝奏云分享链接，填了会在「网盘备用」里多出一个本版直链。",
+  "_readme": "官网的版本列表。每发一个新版本，把这一条复制一份放到数组最前面，改 version / tag / date / asset / size / notes 即可，页面不用重新写代码。asset 填你在 Release 里上传的 APK 文件名；留空则下载按钮退回该版本的 Release 页面。tag 要与 Release 的 tag 完全一致。",
   "releases": [
+    {
+      "version": "2.1.0",
+      "tag": "v2.1.0",
+      "date": "2026-10-27",
+      "asset": "starmusic2.1.0.apk",
+      "size": "10.5 MB",
+      "notes": [
+        {
+          "zh": "新增 - 播放缓存：边播边缓存，播放过的歌下次直接读本地（断网也能播）",
+          "en": "New - play-through cache: songs are stored as they play and replay from local storage, even offline"
+        },
+        {
+          "zh": "新增 - 内置音源改为云端下发（加密配置 + 三条线路回退），换接口不用发版",
+          "en": "New - built-in sources now come from an encrypted cloud config with three fallback routes, so endpoints can change without an update"
+        },
+        {
+          "zh": "新增 - 云端配置里的 lx 音源自动导入到自定义音源列表（按名称与版本去重）",
+          "en": "New - LX source scripts declared in the cloud config are imported into custom sources automatically, de-duplicated by name and version"
+        },
+        {
+          "zh": "优化 - 设置页新增「播放缓存」分组：开关、缓存上限、已占用空间与清除",
+          "en": "Improved - new Play cache section in Settings: on/off switch, size limit, used space and clear"
+        }
+      ]
+    },
     {
       "version": "2.0.0",
       "tag": "v2.0.0",
       "date": "2026-10-03",
       "asset": "starmusic2.0.0.apk",
       "size": "10.5 MB",
-      "lanzou": "https://wwbsh.lanzout.com/if0RH4arm84b",
       "notes": [
         {
           "zh": "新增 - 主题切换：跟随系统 / 浅色 / 深色三档，含 OLED 纯黑模式",

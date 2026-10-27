@@ -84,16 +84,6 @@ npm run build   # 生产构建，产物在 dist/website/browser
 第一条是 GitHub 直连，其余为第三方公益加速线路（只把 GitHub 链接原样转发，不保存文件）。
 访客的选择记在浏览器本地；线路由第三方维护，失效时在数组中增删即可。
 
-### 网盘备用下载
-
-同一个文件里的 `CLOUD_MIRRORS` 定义「网盘备用」那一行，目前一条：
-
-- **蓝奏云**：<https://wwbsh.lanzout.com/b00zyrcnud>（公开文件夹，无提取码，含 1.0.0 起全部版本）
-
-和下载线路不是一回事：线路只是给 GitHub 直链套加速前缀，网盘是点进去自己挑版本的独立页面。
-蓝奏云域名偶尔会变（`lanzout` / `lanzoui` / `lanzoup` / `lanzouw`），失效时改 `url` 即可；
-要再加一个网盘，往数组里加一条 `{ id, label, url }`。
-
 ### 站内文案
 
 `src/app/site-content.ts` 集中存放品牌信息、导航、功能、平台、安装步骤等文案，
