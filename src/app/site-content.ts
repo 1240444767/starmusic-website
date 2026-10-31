@@ -19,7 +19,7 @@ export const SITE_REPO_URL = `https://github.com/${GITHUB.owner}/${GITHUB.repo}`
 export const APP = {
   name: { zh: '星音乐', en: 'StarMusic' } satisfies Localized,
   /** 兜底版本号：有 releases.json 时以它为准 */
-  version: '2.1.0',
+  version: '2.2.0',
   packageId: 'com.starbox.starmusic',
   siteRepoUrl: SITE_REPO_URL,
   releasesUrl: `${SITE_REPO_URL}/releases`,
@@ -311,6 +311,16 @@ export interface ChangelogEntry {
  * 正常发版只需要改 `website/public/releases.json`，不用碰这个文件。
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: '2.2.0',
+    badge: { zh: '最新', en: 'Latest' },
+    items: [
+      { zh: '修复 - 内置解析服务停服导致 QQ / 网易云 / 酷狗 无法播放：改用带签名与 ticket 的网关模式', en: 'Fixed - playback for QQ / NetEase / Kugou after the built-in resolver shut down: switched to a signed gateway protocol with tickets' },
+      { zh: '优化 - 播放链路改为「内置解析优先，自定义音源兜底」，不再每首歌先跑一遍脚本', en: 'Improved - built-in resolution now runs first and custom sources only act as a fallback, instead of the script running for every track' },
+      { zh: '优化 - 远程配置回到主页自动检查（1 小时节流），改动后不用杀进程重进', en: 'Improved - remote config is re-checked when returning to the home page (throttled to once an hour), no more force-stopping the app' },
+      { zh: '修复 - 更新提示：启动页没等到配置时由主页补弹，同一次使用不会重复弹框', en: 'Fixed - update prompt now falls back to the home screen when the splash screen finishes early, and never repeats within one session' },
+    ],
+  },
   {
     version: '2.1.0',
     badge: { zh: '最新', en: 'Latest' },

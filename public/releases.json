@@ -2,6 +2,31 @@
   "_readme": "官网的版本列表。每发一个新版本，把这一条复制一份放到数组最前面，改 version / tag / date / asset / size / notes 即可，页面不用重新写代码。asset 填你在 Release 里上传的 APK 文件名；留空则下载按钮退回该版本的 Release 页面。tag 要与 Release 的 tag 完全一致。",
   "releases": [
     {
+      "version": "2.2.0",
+      "tag": "v2.2.0",
+      "date": "2026-10-31",
+      "asset": "starmusic2.2.0.apk",
+      "size": "10.6 MB",
+      "notes": [
+        {
+          "zh": "修复 - 内置解析服务停服导致 QQ / 网易云 / 酷狗 无法播放：改用带签名与 ticket 的网关模式",
+          "en": "Fixed - playback for QQ / NetEase / Kugou after the built-in resolver shut down: switched to a signed gateway protocol with tickets"
+        },
+        {
+          "zh": "优化 - 播放链路改为「内置解析优先，自定义音源兜底」，不再每首歌先跑一遍脚本",
+          "en": "Improved - built-in resolution now runs first and custom sources only act as a fallback, instead of the script running for every track"
+        },
+        {
+          "zh": "优化 - 远程配置回到主页自动检查（1 小时节流），改动后不用杀进程重进",
+          "en": "Improved - remote config is re-checked when returning to the home page (throttled to once an hour), no more force-stopping the app"
+        },
+        {
+          "zh": "修复 - 更新提示：启动页没等到配置时由主页补弹，同一次使用不会重复弹框",
+          "en": "Fixed - update prompt now falls back to the home screen when the splash screen finishes early, and never repeats within one session"
+        }
+      ]
+    },
+    {
       "version": "2.1.0",
       "tag": "v2.1.0",
       "date": "2026-10-27",
