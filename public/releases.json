@@ -2,6 +2,39 @@
   "_readme": "官网的版本列表。每发一个新版本，把这一条复制一份放到数组最前面，改 version / tag / date / asset / size / notes 即可，页面不用重新写代码。asset 填你在 Release 里上传的 APK 文件名；留空则下载按钮退回该版本的 Release 页面。tag 要与 Release 的 tag 完全一致。",
   "releases": [
     {
+      "version": "2.3.0",
+      "tag": "v2.3.0",
+      "date": "2026-11-23",
+      "asset": "starmusic2.3.0.apk",
+      "size": "10.7 MB",
+      "notes": [
+        {
+          "zh": "新增 - 第五个音乐平台「咪咕音乐」：搜索、歌单、榜单、歌手与每日推荐全部接入",
+          "en": "New - Migu Music joins as the fifth platform, with search, playlists, charts, artists and daily picks"
+        },
+        {
+          "zh": "新增 - WebDAV 云同步：把设置、喜欢、歌单、音源备份到自己的 WebDAV，换机一键恢复",
+          "en": "New - WebDAV cloud sync: back up settings, likes, playlists and sources to your own WebDAV and restore on a new device"
+        },
+        {
+          "zh": "新增 - 播放页「更多操作」加入应用独立音量，可单独调整本 App 的播放声音而不影响系统音量",
+          "en": "New - Per-app volume in the More menu, so this app's output can be adjusted without touching system volume"
+        },
+        {
+          "zh": "新增 - 咪咕榜单与歌手页带封面，歌手详情改用真实接口并支持翻页",
+          "en": "New - Migu charts and artist pages now show artwork; artist pages use the real API with paging"
+        },
+        {
+          "zh": "修复 - 咪咕歌曲歌名 / 歌词 / 时长缺失，分享短链导入提示「未找到歌单 id」",
+          "en": "Fixed - missing titles, lyrics and durations for Migu tracks, and \"playlist id not found\" on short share links"
+        },
+        {
+          "zh": "优化 - 咪咕歌单导入改为全量拉取，此前只取前 30 首",
+          "en": "Improved - Migu playlist import now fetches the full list instead of the first 30 tracks"
+        }
+      ]
+    },
+    {
       "version": "2.2.0",
       "tag": "v2.2.0",
       "date": "2026-10-31",

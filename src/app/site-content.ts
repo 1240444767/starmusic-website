@@ -19,7 +19,7 @@ export const SITE_REPO_URL = `https://github.com/${GITHUB.owner}/${GITHUB.repo}`
 export const APP = {
   name: { zh: '星音乐', en: 'StarMusic' } satisfies Localized,
   /** 兜底版本号：有 releases.json 时以它为准 */
-  version: '2.2.0',
+  version: '2.3.0',
   packageId: 'com.starbox.starmusic',
   siteRepoUrl: SITE_REPO_URL,
   releasesUrl: `${SITE_REPO_URL}/releases`,
@@ -154,7 +154,7 @@ export interface Stat {
 }
 
 export const STATS: Stat[] = [
-  { value: '4', label: { zh: '个音乐平台聚合', en: 'music platforms' } },
+  { value: '5', label: { zh: '个音乐平台聚合', en: 'music platforms' } },
   { value: '12', label: { zh: '套主题种子色', en: 'theme seed colors' } },
   { value: '30', label: { zh: '首每日推荐', en: 'daily picks' } },
   { value: 'M3E', label: { zh: 'Material 3 Expressive', en: 'Material 3 Expressive' } },
@@ -169,7 +169,7 @@ export interface Feature {
 export const FEATURES: Feature[] = [
   {
     icon: 'layers',
-    title: { zh: '四平台聚合', en: 'Four platforms, one app' },
+    title: { zh: '五平台聚合', en: 'Five platforms, one app' },
     desc: {
       zh: '搜索、歌单、榜单与歌手一次汇总，覆盖酷我、酷狗、QQ 音乐与网易云音乐，切换平台不用换应用。',
       en: 'Search, playlists, charts and artists from Kuwo, Kugou, QQ Music and NetEase Cloud Music in a single client.',
@@ -179,8 +179,8 @@ export const FEATURES: Feature[] = [
     icon: 'search',
     title: { zh: '猜你想搜', en: 'Search suggestions' },
     desc: {
-      zh: '边打字边联想：四个平台并发取词、轮流混排再去重，点一下关键词直接开搜。',
-      en: 'Type-ahead suggestions fetched from all four providers in parallel, interleaved, de-duplicated and one tap away from a search.',
+      zh: '边打字边联想：五个平台并发取词、轮流混排再去重，点一下关键词直接开搜。',
+      en: 'Type-ahead suggestions fetched from all five providers in parallel, interleaved, de-duplicated and one tap away from a search.',
     },
   },
   {
@@ -262,7 +262,7 @@ export const SHOTS: Shot[] = [
   {
     file: 'search',
     label: { zh: '搜索', en: 'Search' },
-    desc: { zh: '四平台聚合与猜你想搜', en: 'Four-platform search' },
+    desc: { zh: '五平台聚合与猜你想搜', en: 'Five-platform search' },
   },
   {
     file: 'playlist',
@@ -298,6 +298,11 @@ export const PLATFORMS: Platform[] = [
     color: '#e60026',
     tags: { zh: '搜索 · 歌单 · 榜单', en: 'Search · Playlists · Charts' },
   },
+  {
+    name: { zh: '咪咕音乐', en: 'Migu Music' },
+    color: '#ff6a2b',
+    tags: { zh: '搜索 · 歌单 · 榜单 · 歌手', en: 'Search · Playlists · Charts · Artists' },
+  },
 ];
 
 export interface ChangelogEntry {
@@ -312,13 +317,15 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: '2.2.0',
+    version: '2.3.0',
     badge: { zh: '最新', en: 'Latest' },
     items: [
-      { zh: '修复 - 内置解析服务停服导致 QQ / 网易云 / 酷狗 无法播放：改用带签名与 ticket 的网关模式', en: 'Fixed - playback for QQ / NetEase / Kugou after the built-in resolver shut down: switched to a signed gateway protocol with tickets' },
-      { zh: '优化 - 播放链路改为「内置解析优先，自定义音源兜底」，不再每首歌先跑一遍脚本', en: 'Improved - built-in resolution now runs first and custom sources only act as a fallback, instead of the script running for every track' },
-      { zh: '优化 - 远程配置回到主页自动检查（1 小时节流），改动后不用杀进程重进', en: 'Improved - remote config is re-checked when returning to the home page (throttled to once an hour), no more force-stopping the app' },
-      { zh: '修复 - 更新提示：启动页没等到配置时由主页补弹，同一次使用不会重复弹框', en: 'Fixed - update prompt now falls back to the home screen when the splash screen finishes early, and never repeats within one session' },
+      { zh: '新增 - 第五个音乐平台「咪咕音乐」：搜索、歌单、榜单、歌手与每日推荐全部接入', en: 'New - Migu Music joins as the fifth platform, with search, playlists, charts, artists and daily picks' },
+      { zh: '新增 - WebDAV 云同步：把设置、喜欢、歌单、音源备份到自己的 WebDAV，换机一键恢复', en: 'New - WebDAV cloud sync: back up settings, likes, playlists and sources to your own WebDAV and restore on a new device' },
+      { zh: '新增 - 播放页「更多操作」加入应用独立音量，可单独调整本 App 的播放声音而不影响系统音量', en: 'New - Per-app volume in the More menu, so the app’s output can be adjusted without touching system volume' },
+      { zh: '新增 - 咪咕榜单与歌手页带封面，歌手详情改用真实接口并支持翻页', en: 'New - Migu charts and artist pages now show artwork; artist pages use the real API with paging' },
+      { zh: '修复 - 咪咕歌曲歌名 / 歌词 / 时长缺失，分享短链导入提示「未找到歌单 id」', en: 'Fixed - missing titles, lyrics and durations for Migu tracks, and "playlist id not found" on short share links' },
+      { zh: '优化 - 咪咕歌单导入改为全量拉取，此前只取前 30 首', en: 'Improved - Migu playlist import now fetches the full list instead of the first 30 tracks' },
     ],
   },
   {

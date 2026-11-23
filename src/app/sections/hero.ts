@@ -25,7 +25,7 @@ import { PhoneShot } from './phone-shot';
           <p class="tagline">
             {{
               i18n.t({
-                zh: '把四大音乐平台，装进一个 Material 3 播放器',
+                zh: '把五大音乐平台，装进一个 Material 3 播放器',
                 en: 'Four music platforms in one Material 3 player'
               })
             }}
